@@ -15,12 +15,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
     const App = () => {
-
-        //Initial Todos
-     const initialTodos = [{}];
       
-     const [todos, setTodos] = useState([initialTodos]);
-
+     const [todos, setTodos] = useState([]);
     //Modal Visibility
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,7 +27,7 @@ import {createStackNavigator} from '@react-navigation/stack';
         const newTodos = [...todos, todo]; 
             setTodos(newTodos);
             setModalVisible(false);
-            console.log(setTodos(newTodos));
+            console.log(todos);
     }
     //Screen One
       const ScreenOne = props => {
@@ -67,12 +63,14 @@ import {createStackNavigator} from '@react-navigation/stack';
     const Home = () => {
       return (
         <>
-        <Container todos={todos} setTodos={setTodos}>
-        {todos.length == 1 ? <TodoText>Você ainda não possui tarefas</TodoText> : null}
+        <Container todos={todos} setTodos={setTodos} style={{backgroundColor: 'black'}}>
+        {todos.length == 0 ? <TodoText>Você ainda não possui tarefas</TodoText> : null}
+        {todos.length > 0 ? 
         <ListItems 
             todos={todos}
             setTodos={setTodos}
         />
+        : null}
               <StatusBar style="light" />
         </Container>
         </>

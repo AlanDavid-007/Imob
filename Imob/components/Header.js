@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     HeaderView: {
         marginRight: 40,
         marginLeft: 40,
-        backgroundColor: '#68a0cf',
+        backgroundColor: 'black',
         borderRadius: 10,
         borderWidth: 1,
         borderColor: '#fff',

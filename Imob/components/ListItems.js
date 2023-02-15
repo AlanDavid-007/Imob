@@ -21,16 +21,15 @@ const ListItems = ({todos, setTodos}) => {
     //For styling currently swiped todo row
     const [swipedRow, setSwipedRow] = useState(null);
 
-  
+    // const filterData = todos.filter((item) => item.title !== '').map(({title}) => ({title}));
     return (
         <>
-        {todos.lenght > 2 ?
          <SwipeListView
             data={todos}
             renderItem={(data) => {
 
                  const RowText = data.item.key == swipedRow ? SwipedTodoText : TodoText;
-                //   console.log(data.item);
+                   console.log(data.item);
                 return(
                     <ListView
                             // underlayColor = {colors{prioriColor}}
@@ -40,13 +39,13 @@ const ListItems = ({todos, setTodos}) => {
                         >
                             <>
                                 <RowText>{data.item.title}</RowText>
-                                {/* <RowText style={styles.rowText}>{data.item.description}</RowText> */}
+                                <RowText>{data.item.adress}</RowText>
+                                <TodoDate style={{color: "white"}}>Finalidade:{data.item.purpose} | Tipo:{data.item.type} | Preço:{data.item.price}</TodoDate>
                             </>
                         </ListView>
                 );
                         }}
             />
-            : null };
             </>
     );
 }

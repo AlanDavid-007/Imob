@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Modal, TextInput, Text, Button, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Modal, TextInput, Text, Button, SafeAreaView, StyleSheet, View, Alert} from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,6 +27,10 @@ const InputModal = ({
 
         
     const [todoInputValue, setTodoInputValue] = useState("");
+    const [adressInputValue, setAdressInputValue] = useState("");
+    const [purposeInputValue, setPurposeInputValue] = useState("");
+    const [typeInputValue, setTypeInputValue] = useState("");
+    const [priceInputValue, setPriceInputValue] = useState(0);
 
 
     const handleSubmit = () => {
@@ -34,6 +38,11 @@ const InputModal = ({
                 handleAddTodo({
                     "title": todoInputValue,
                     // description: descriptionInputValue,
+                    "adress": adressInputValue,
+                    "purpose": purposeInputValue,
+                    "type": typeInputValue,
+                    "price": priceInputValue,
+                    // "Image":
                     "color": "#845EC2",
                     "key": uuidv4()
                 });
@@ -51,16 +60,17 @@ const InputModal = ({
                     Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                   }}
+                  
             >
-                <ModalContainer>
-                    <ModalView>
+                <ModalContainer style={{backgroundColor: 'black'}}>
+                    <ModalView style={{backgroundColor: 'black'}}>
                     <ModalIcon>
-                        <HeaderTitle>Imóveis</HeaderTitle>
+                        <HeaderTitle>Cadastro de Imóveis</HeaderTitle>
                         <AntDesign name="edit" size={15} color={colors.tertiary}/>
                     </ModalIcon>
                     
                     <StyledInput
-                        placeholder="Adione um Imóvel"
+                        placeholder="Adione o nome do Imóvel"
                         style={{height: 40}}
                         placeholderTextColor={colors.alternative}
                         selectionColor={colors.secondary}
@@ -69,12 +79,59 @@ const InputModal = ({
                         value={todoInputValue}
                         onSubmitEditing={handleSubmit}
                         />
-                        {/* <Text></Text>
-                         <Text></Text> */}
+                                                <Text></Text>
+                         <Text></Text> 
+                         <StyledInput
+                        placeholder="Adione o endereço do Imovél"
+                        style={{height: 40}}
+                        placeholderTextColor={colors.alternative}
+                        selectionColor={colors.secondary}
+                        autoFocus={true}
+                        onChangeText={(text) => setAdressInputValue(text)}
+                        value={adressInputValue}
+                        onSubmitEditing={handleSubmit}
+                        />
+                                                <Text></Text>
+                         <Text></Text> 
+                         <StyledInput
+                        placeholder="Adione a finalidade do Imovél"
+                        style={{height: 40}}
+                        placeholderTextColor={colors.alternative}
+                        selectionColor={colors.secondary}
+                        autoFocus={true}
+                        onChangeText={(text) => setPurposeInputValue(text)}
+                        value={purposeInputValue}
+                        onSubmitEditing={handleSubmit}
+                        />
+                                                <Text></Text>
+                         <Text></Text> 
+                         <StyledInput
+                        placeholder="Adione o tipo do Imovél"
+                        style={{height: 40}}
+                        placeholderTextColor={colors.alternative}
+                        selectionColor={colors.secondary}
+                        autoFocus={true}
+                        onChangeText={(text) => setTypeInputValue(text)}
+                        value={typeInputValue}
+                        onSubmitEditing={handleSubmit}
+                        />
+                                                <Text></Text>
+                         <Text></Text> 
+                         <StyledInput
+                        placeholder="Adione o Preço do Imovél"
+                        style={{height: 40}}
+                        placeholderTextColor={colors.alternative}
+                        selectionColor={colors.secondary}
+                        autoFocus={true}
+                        onChangeText={(text) => setPriceInputValue(text)}
+                        value={priceInputValue}
+                        keyboardType='numeric'
+                        onSubmitEditing={handleSubmit}
+                        />
                         <SafeAreaView style={{ flex: 1 }}>
     </SafeAreaView>
                     <ModalActionGroup>
-                        <ModalAction color={colors.primary} onPress={() => setModalVisible(!modalVisible)}>
+                        <ModalAction style={{backgroundColor: 'black'}} onPress={() => setModalVisible(!modalVisible)}>
                         <AntDesign name="close" size={20} color={colors.tertiary}/>
                         </ModalAction>
 
