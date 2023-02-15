@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet} from 'react-native';
-
+import {Text, StyleSheet, Image, View} from 'react-native';
+//Navigation import
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 //Styled Components
 import {
     ListView,
@@ -40,7 +42,12 @@ const ListItems = ({todos, setTodos}) => {
                             <>
                                 <RowText>{data.item.title}</RowText>
                                 <RowText>{data.item.adress}</RowText>
+                                <View>
+                                <Image source={{ uri: data.item.image }} style={{ width: 300, height: 300 }} />
+
+                                </View>
                                 <TodoDate style={{color: "white"}}>Finalidade:{data.item.purpose} | Tipo:{data.item.type} | Preço:{data.item.price}</TodoDate>
+                                
                             </>
                         </ListView>
                 );

@@ -1,7 +1,11 @@
 import React, {useState} from "react";
-import {Modal, TextInput, Text, Button, SafeAreaView, StyleSheet, View, Alert} from 'react-native';
+import {Modal, Image, Text, Button, SafeAreaView, StyleSheet, View, Alert, TouchableOpacity} from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import * as ImagePicker from 'expo-image-picker';
+//Navigation import
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import {
     ModalButton,
@@ -23,16 +27,50 @@ const InputModal = ({
     setTodos,
     handleAddTodo,
     todos
-    }) => {
-
-        
+    }) => {     
     const [todoInputValue, setTodoInputValue] = useState("");
     const [adressInputValue, setAdressInputValue] = useState("");
     const [purposeInputValue, setPurposeInputValue] = useState("");
     const [typeInputValue, setTypeInputValue] = useState("");
     const [priceInputValue, setPriceInputValue] = useState(0);
-
-
+      // The path of the picked image
+  const [pickedImagePath, setPickedImagePath] = useState('');
+    const showImagePicker = async () => {
+        // Ask the user for the permission to access the media library 
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    
+        if (permissionResult.granted === false) {
+          alert("Você recusou o acesso a galeria");
+          return;
+        }
+    
+        const result = await ImagePicker.launchImageLibraryAsync();
+    
+        // Explore the result
+        console.log(result);
+    
+        if (!result.canceled) {
+            setPickedImagePath(result.assets[0].uri);
+          }
+    }
+        const openCamera = async () => {
+            // Ask the user for the permission to access the camera
+            const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+        
+            if (permissionResult.granted === false) {
+              alert("Você recusou o acesso a câmera");
+              return;
+            }
+        
+            const result = await ImagePicker.launchCameraAsync();
+        
+            // Explore the result
+            console.log(result);
+        
+            if (!result.canceled) {
+                setPickedImagePath(result.assets[0].uri);
+              }
+        }
     const handleSubmit = () => {
         if (todoInputValue !== '') {
                 handleAddTodo({
@@ -42,14 +80,14 @@ const InputModal = ({
                     "purpose": purposeInputValue,
                     "type": typeInputValue,
                     "price": priceInputValue,
-                    // "Image":
+                    "image": pickedImagePath,
                     "color": "#845EC2",
                     "key": uuidv4()
                 });
-                }
         // console.log(priori);
         setTodoInputValue("");
     };
+}
     return (
         <>
             <Modal 
@@ -94,7 +132,7 @@ const InputModal = ({
                                                 <Text></Text>
                          <Text></Text> 
                          <StyledInput
-                        placeholder="Adione a finalidade do Imovél"
+                        placeholder="Finalidade: Aluguel ou Venda"
                         style={{height: 40}}
                         placeholderTextColor={colors.alternative}
                         selectionColor={colors.secondary}
@@ -106,7 +144,7 @@ const InputModal = ({
                                                 <Text></Text>
                          <Text></Text> 
                          <StyledInput
-                        placeholder="Adione o tipo do Imovél"
+                        placeholder="Tipo: Casa, Ap. ou Comércio"
                         style={{height: 40}}
                         placeholderTextColor={colors.alternative}
                         selectionColor={colors.secondary}
@@ -128,6 +166,18 @@ const InputModal = ({
                         keyboardType='numeric'
                         onSubmitEditing={handleSubmit}
                         />
+                     <Text></Text>
+                         <Text></Text> 
+                    <View style={{ flex: 1, flexDirection: 'row'}}>
+                        <TouchableOpacity onPress={showImagePicker} style={styles.button}>
+                        <Text style={{color: 'white'}}>Abrir Galeria</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={openCamera} style={styles.button}>
+                        <Text style={{color: 'white'}}>Abrir Câmera</Text>
+                        </TouchableOpacity>
+                        {/* {this.props.navigation.navigate('Listagem', { uri : pickedImagePath })}; */}
+                        </View>
+
                         <SafeAreaView style={{ flex: 1 }}>
     </SafeAreaView>
                     <ModalActionGroup>
@@ -148,15 +198,10 @@ const InputModal = ({
 }
 const styles = StyleSheet.create({
     button: {
-        marginRight: 40,
-        marginLeft: 40,
-        marginTop: 10,
-        paddingBottom: 20,
-        backgroundColor: '#68a0cf',
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#fff',
-
+    height: 65,
+    width: 100,
+    borderRadius: 10,
+    marginLeft: 30
     }
     })
 export default InputModal;
